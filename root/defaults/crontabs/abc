@@ -1,0 +1,2 @@
+# min   hour    day     month   weekday command
+*/5     *       *       *       *       /app/backup.sh 2>&1

@@ -1,0 +1,34 @@
+#!/usr/bin/with-contenv bash
+
+if [ -f /usr/bin/apt ]; then
+    ## Ubuntu
+    echo "\
+        borgbackup \
+        openssh-client" >> /mod-repo-packages-to-install.list
+fi
+
+if [ -f /sbin/apk ]; then
+    # Alpine
+    echo "\
+        borgbackup \
+        openssh" >> /mod-repo-packages-to-install.list
+fi
+
+
+
+# permissions
+lsiown -R abc:abc \
+    /app \
+    /config
+
+
+chown -R root:root /root
+chmod -R 600 /root/.ssh
+
+if [ -z "${BORG_ARCHIVE}"]; then
+  echo "BORG_ARCHIVE not set; running without restoring previous backups"
+else
+  # try to restore
+  exec \
+    s6-setuidgid abc /app/restore.sh
+fi
