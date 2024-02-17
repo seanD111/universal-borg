@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+borgmatic config validate --config /config/borgmatic.yaml
+
+if [ -z ${BORG_REPO_KEY+x} ]; 
+then 
+  echo "No repo key set; repo will be unencrypted; 
+else 
+  echo "Repo key set; repo will be encrypted"; 
+fi
+borgmatic init --encryption repokey-aes-ocb --config /config/borgmatic.yaml

@@ -1,39 +1,27 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-# Setting this, so the repo does not need to be given on the commandline:
-# export BORG_REPO=ssh://username@example.com:2022/~/backup/main
-
-# See the section "Passphrase notes" for more infos.
-# export BORG_PASSPHRASE='XYZl0ngandsecurepa_55_phrasea&&123'
-
-# We need an exact backup name
-# export BORG_ARCHIVE='myserver-system-2019-08-11'
-
-# some helpers and error handling:
-info() { printf "\n%s %s\n\n" "$( date )" "$*" >&2; }
-trap 'echo $( date ) Restore interrupted >&2; exit 2' INT TERM
-
-info "Starting restore"
-if [borg rlist | grep -q $BORG_ARCHIVE]
+if [[ -z "${BORG_RESTORE_ARCHIVE}" ]]
 then
-  # Extracting from the remote repo
-  mkdir -p /tmp/borg_restore
-  cd /tmp/borg_restore
-
-  borg extract $BORG_ARCHIVE
-  cp -r /tmp/borg_restore/* /config/
-else
-  info "Archive not found"
-  false
+  echo "BORG_RESTORE_ARCHIVE environment variable not set, so no archives will be restored"
+  exit
 fi
 
-restore_exit=$?
-
-if [ ${restore_exit} -eq 0 ]; then
-    info "Restore finished successfully"
+if [borgmatic rlist | grep -q "${BORG_RESTORE_ARCHIVE}"]
+then
+  echo "${BORG_RESTORE_ARCHIVE} found, attempting to restore"
+elif ["${BORG_RESTORE_ARCHIVE}" == "latest"]
+  echo "attempting to restore latest archive"
 else
-    info "Restore not finished successfully"
+  echo "Unknown error; exiting"
+  exit
 fi
 
-exit ${restore_exit}
+# Extracting from the remote repo
+mkdir -p /tmp/borg_restore
+
+borgmatic extract --archive $BORG_RESTORE_ARCHIVE --destination /tmp/borg_restore
+cp -r /tmp/borg_restore/* $BORG_SOURCE_DIRECTORY
+
+# Clear the temp directory
+#rm -rf /tmp/borg_restore
