@@ -21,7 +21,7 @@ borgmatic config validate --config /config/borgmatic.yaml
 if [ -z ${BORG_REPO_KEY+x} ]; 
 then 
   echo "No repo key set; repo will be unencrypted"; 
-  borgmatic init --config /config/borgmatic.yaml
+  borgmatic init --encryption none --config /config/borgmatic.yaml
 else 
   echo "Repo key set; repo will be encrypted"; 
   borgmatic init --encryption repokey-aes-ocb --config /config/borgmatic.yaml
