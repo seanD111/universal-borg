@@ -6,8 +6,8 @@ lsiown -R abc:abc \
     /app \
     /config
 
-chmod 600 /config/borgmatic.yaml
-chmod 600 /config/crontabs/abc
+chmod 750 /config/borgmatic.yaml
+chmod 750 /config/crontabs/abc
 
 borgmatic config validate --config /config/borgmatic.yaml
 
