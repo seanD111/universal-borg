@@ -8,17 +8,17 @@ mkdir -p ${BORG_REPO}
 
 chmod 750 -R ${BORG_REPO}
 
-lsiown -R abc:abc ${BORG_REPO}
+lsiown -R root:root ${BORG_REPO}
 
 echo "Validating configuration..."
 
-exec s6-setuidgid abc borgmatic config validate --config /config/borgmatic.yaml
+borgmatic config validate --config /config/borgmatic.yaml
 
 if [ -z ${BORG_REPO_KEY+x} ]; 
 then 
   echo "No repo key set; repo will be unencrypted"; 
-  exec s6-setuidgid abc borgmatic rcreate --encryption none --config /config/borgmatic.yaml
+  borgmatic rcreate --encryption none --config /config/borgmatic.yaml
 else 
   echo "Repo key set; repo will be encrypted"; 
-  exec s6-setuidgid abc borgmatic rcreate --encryption repokey-aes-ocb --config /config/borgmatic.yaml
+  borgmatic rcreate --encryption repokey-aes-ocb --config /config/borgmatic.yaml
 fi
