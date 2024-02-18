@@ -26,11 +26,6 @@ lsiown -R abc:abc \
     /app \
     /config
 
+lsiown abc:abc /config/crontabs/abc
 chmod +rx /config/borgmatic.yaml
 chmod +rx /config/crontabs/abc
-
-export BORG_SOURCE_DIRECTORY="${BORG_SOURCE_DIRECTORY:=/config}"
-export BORG_REPO="${BORG_REPO:=/tmp/borgmatic-backup}"
-
-mkdir -p BORG_SOURCE_DIRECTORY
-mkdir -p BORG_REPO

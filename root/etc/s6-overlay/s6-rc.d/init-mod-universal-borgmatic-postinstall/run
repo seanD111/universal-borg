@@ -1,4 +1,11 @@
 #!/usr/bin/with-contenv bash
+
+export BORG_SOURCE_DIRECTORY="${BORG_SOURCE_DIRECTORY:=/config}"
+export BORG_REPO="${BORG_REPO:=/tmp/borgmatic-backup}"
+
+mkdir -p BORG_SOURCE_DIRECTORY
+mkdir -p BORG_REPO
+
 echo "Validating configuration..."
 
 borgmatic config validate --config /config/borgmatic.yaml
