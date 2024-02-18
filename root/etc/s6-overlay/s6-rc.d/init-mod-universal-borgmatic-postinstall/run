@@ -3,8 +3,10 @@
 export BORG_SOURCE_DIRECTORY="${BORG_SOURCE_DIRECTORY:=/config}"
 export BORG_REPO="${BORG_REPO:=/tmp/borgmatic-backup}"
 
-mkdir -p BORG_SOURCE_DIRECTORY
-mkdir -p BORG_REPO
+mkdir -p ${BORG_SOURCE_DIRECTORY}
+mkdir -p ${BORG_REPO}
+
+chmod 700 -R ${BORG_REPO}
 
 echo "Validating configuration..."
 
