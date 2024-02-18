@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bash
 echo "Validating configuration..."
+chmod 755 /config/borgmatic.yaml
 borgmatic config validate --config /config/borgmatic.yaml
 
 export BORG_SOURCE_DIRECTORY="${BORG_SOURCE_DIRECTORY:=/config}"
