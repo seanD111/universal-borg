@@ -8,7 +8,7 @@ mkdir -p ${BORG_REPO}
 
 chmod 750 -R ${BORG_REPO}
 
-lsiown abc:abc -R ${BORG_REPO}
+lsiown -R abc:abc ${BORG_REPO}
 
 echo "Validating configuration..."
 
