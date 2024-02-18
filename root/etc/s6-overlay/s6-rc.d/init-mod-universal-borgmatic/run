@@ -16,16 +16,6 @@ if [ -f /sbin/apk ]; then
         openssh" >> /mod-repo-packages-to-install.list
 fi
 
-
-
-# permissions
-lsiown -R abc:abc \
-    /app \
-    /config
-
-chown -R root:root /root
-chmod -R 600 /root/.ssh
-
 # copy default config files if they don't exist
 if [[ ! -f /config/borgmatic.yaml ]]; then
     cp /defaults/borgmatic.yaml.sample /config/borgmatic.yaml
