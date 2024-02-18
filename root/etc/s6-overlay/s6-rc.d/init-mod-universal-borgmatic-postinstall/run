@@ -17,8 +17,8 @@ exec s6-setuidgid abc borgmatic config validate --config /config/borgmatic.yaml
 if [ -z ${BORG_REPO_KEY+x} ]; 
 then 
   echo "No repo key set; repo will be unencrypted"; 
-  exec s6-setuidgid abc borgmatic init --encryption none --config /config/borgmatic.yaml
+  exec s6-setuidgid abc borgmatic rcreate --encryption none --config /config/borgmatic.yaml
 else 
   echo "Repo key set; repo will be encrypted"; 
-  exec s6-setuidgid abc borgmatic init --encryption repokey-aes-ocb --config /config/borgmatic.yaml
+  exec s6-setuidgid abc borgmatic rcreate --encryption repokey-aes-ocb --config /config/borgmatic.yaml
 fi
