@@ -1,21 +1,6 @@
 #!/usr/bin/with-contenv bash
 echo "Validating configuration..."
 
-# permissions
-lsiown -R abc:abc \
-    /app \
-    /config
-
-chmod 750 /config/borgmatic.yaml
-chmod 750 /config/crontabs/abc
-
-export BORG_SOURCE_DIRECTORY="${BORG_SOURCE_DIRECTORY:=/config}"
-export BORG_REPO="${BORG_REPO:=/tmp/borgmatic-backup}"
-
-mkdir -p BORG_SOURCE_DIRECTORY
-mkdir -p BORG_REPO
-
-
 borgmatic config validate --config /config/borgmatic.yaml
 
 if [ -z ${BORG_REPO_KEY+x} ]; 
