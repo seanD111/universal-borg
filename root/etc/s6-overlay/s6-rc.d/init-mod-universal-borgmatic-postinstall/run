@@ -1,24 +1,10 @@
 #!/usr/bin/with-contenv bash
 
-export BORG_SOURCE_DIRECTORY="${BORG_SOURCE_DIRECTORY:=/config}"
-export BORG_REPO="${BORG_REPO:=/tmp/borgmatic-backup}"
-
-mkdir -p ${BORG_SOURCE_DIRECTORY}
-mkdir -p ${BORG_REPO}
-
-chmod 750 -R ${BORG_REPO}
-
-lsiown -R root:root ${BORG_REPO}
+export BORG_ENCRYPTION="${BORG_ENCRYPTION:=none}"
 
 echo "Validating configuration..."
 
 borgmatic config validate --config /config/borgmatic.yaml
 
-if [ -z ${BORG_REPO_KEY+x} ]; 
-then 
-  echo "No repo key set; repo will be unencrypted"; 
-  borgmatic rcreate --encryption none --config /config/borgmatic.yaml
-else 
-  echo "Repo key set; repo will be encrypted"; 
-  borgmatic rcreate --encryption repokey-aes-ocb --config /config/borgmatic.yaml
-fi
+echo "Borg repo encryption mode set to ${BORG_ENCRYPTION}"; 
+borgmatic rcreate --encryption ${BORG_ENCRYPTION} --config /config/borgmatic.yaml --make-parent-dirs
