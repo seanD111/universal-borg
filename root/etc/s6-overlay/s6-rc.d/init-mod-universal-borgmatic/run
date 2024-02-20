@@ -26,6 +26,6 @@ lsiown -R abc:abc \
     /app \
     /config
 
-lsiown abc:abc /config/crontabs/abc
+lsiown root:root /config/crontabs/root
 chmod +rx /config/borgmatic.yaml
-chmod +rx /config/crontabs/abc
+chmod +rx /config/crontabs/root
