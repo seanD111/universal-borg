@@ -21,6 +21,11 @@ if [[ ! -f /config/borgmatic.yaml ]]; then
     cp /defaults/borgmatic.yaml.sample /config/borgmatic.yaml
 fi
 
+# copy default cron job into /config/crontabs, appending to the crontab that already exists 
+echo >> /config/crontabs/root
+cat /defaults/crontabs/root >> /config/crontabs/root 
+crontab -u root "/config/crontabs/root"
+
 # permissions
 lsiown -R abc:abc \
     /app \
