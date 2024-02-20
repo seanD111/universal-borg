@@ -1,11 +1,11 @@
 #!/usr/bin/with-contenv bash
 
 # default environment variables
-"${BORGMATIC_ENCRYPTION:=none}" > /run/s6/container_environment/BORGMATIC_ENCRYPTION
-"${BORGMATIC_PERIODIC:=daily}" > /run/s6/container_environment/BORGMATIC_PERIODIC
-"${BORGMATIC_ROOT:=/config}" > /run/s6/container_environment/BORGMATIC_ROOT
-"${BORGMATIC_SOURCE:=/config}" > /run/s6/container_environment/BORGMATIC_SOURCE
-"${BORGMATIC_REPO:=/tmp/borgmatic-backup}" > /run/s6/container_environment/BORGMATIC_REPO
+"${BORGMATIC_ENCRYPTION:-none}" > /run/s6/container_environment/BORGMATIC_ENCRYPTION
+"${BORGMATIC_PERIODIC:-daily}" > /run/s6/container_environment/BORGMATIC_PERIODIC
+"${BORGMATIC_ROOT:-/config}" > /run/s6/container_environment/BORGMATIC_ROOT
+"${BORGMATIC_SOURCE:-/config}" > /run/s6/container_environment/BORGMATIC_SOURCE
+"${BORGMATIC_REPO:-/tmp/borgmatic-backup}" > /run/s6/container_environment/BORGMATIC_REPO
 
 # "${BORGMATIC_RESTORE:=latest}"
 
