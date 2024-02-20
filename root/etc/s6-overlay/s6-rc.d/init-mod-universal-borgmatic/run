@@ -1,5 +1,15 @@
 #!/usr/bin/with-contenv bash
 
+# default environment variables
+"${BORGMATIC_ENCRYPTION:=none}" > /run/s6/container_environment/BORGMATIC_ENCRYPTION
+"${BORGMATIC_PERIODIC:=daily}" > /run/s6/container_environment/BORGMATIC_PERIODIC
+"${BORGMATIC_ROOT:=/config}" > /run/s6/container_environment/BORGMATIC_ROOT
+"${BORGMATIC_SOURCE:=/config}" > /run/s6/container_environment/BORGMATIC_SOURCE
+"${BORGMATIC_REPO:=/tmp/borgmatic-backup}" > /run/s6/container_environment/BORGMATIC_REPO
+
+# "${BORGMATIC_RESTORE:=latest}"
+
+# install packages
 if [ -f /usr/bin/apt ]; then
     ## Ubuntu
     echo "\
@@ -15,22 +25,3 @@ if [ -f /sbin/apk ]; then
         borgmatic \
         openssh" >> /mod-repo-packages-to-install.list
 fi
-
-# copy default config files if they don't exist
-if [[ ! -f /config/borgmatic.yaml ]]; then
-    cp /defaults/borgmatic.yaml.sample /config/borgmatic.yaml
-fi
-
-# copy default cron job into /config/crontabs, appending to the crontab that already exists 
-echo >> /config/crontabs/root
-cat /defaults/crontabs/root >> /config/crontabs/root 
-crontab -u root "/config/crontabs/root"
-
-# permissions
-lsiown -R abc:abc \
-    /app \
-    /config
-
-lsiown root:root /config/crontabs/root
-chmod +rx /config/borgmatic.yaml
-chmod +rx /config/crontabs/root

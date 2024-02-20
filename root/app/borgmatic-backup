@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv bash
+borgmatic --verbosity -1 --syslog-verbosity 1 --config /config/.config/borgmatic/config.yaml

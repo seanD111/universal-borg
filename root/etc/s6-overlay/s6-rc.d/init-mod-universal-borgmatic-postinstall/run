@@ -1,10 +1,29 @@
 #!/usr/bin/with-contenv bash
 
-export BORG_ENCRYPTION="${BORG_ENCRYPTION:=none}"
+mkdir -p ${BORGMATIC_ROOT}/.config/borgmatic/ ${BORGMATIC_ROOT}/.config/borg/
+
+# copy default config files if they don't exist
+if [[ ! -f ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml ]]; then
+    cp /defaults/config.yaml.sample ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml
+fi
+
+# rather than deal with root crontabs and their possible conflicts with other containers (i.e, swag),
+# we use alpine's /etc/periodic run-parts scripts
+# periodic can be: 15min, hourly, daily, weekly, or monthly
+cp /app/borgmatic-backup /etc/periodic/${BORGMATIC_PERIODIC}
+chmod +rx /etc/periodic/${BORGMATIC_PERIODIC}/borgmatic-backup
+
+# permissions
+lsiown -R abc:abc /config
+
+chmod +r ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml
+
+
+
 
 echo "Validating configuration..."
 
-borgmatic config validate --config /config/borgmatic.yaml
+borgmatic config validate --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml
 
-echo "Borg repo encryption mode set to ${BORG_ENCRYPTION}"; 
-borgmatic rcreate --encryption ${BORG_ENCRYPTION} --config /config/borgmatic.yaml --make-parent-dirs
+echo "Borg repo encryption mode set to ${BORGMATIC_ENCRYPTION}"; 
+borgmatic rcreate --encryption ${BORGMATIC_ENCRYPTION} --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml --make-parent-dirs
