@@ -27,3 +27,7 @@ borgmatic config validate --config ${BORGMATIC_ROOT}/.config/borgmatic/config.ya
 
 echo "Borg repo encryption mode set to ${BORGMATIC_ENCRYPTION}"; 
 borgmatic rcreate --encryption ${BORGMATIC_ENCRYPTION} --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml --make-parent-dirs
+
+echo "Running initial backup..."
+# run initial IP update
+exec s6-setuidgid root /app/borgmatic-backup
