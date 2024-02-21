@@ -9,8 +9,9 @@ The mod is also configured by the environment variables:
 - BORGMATIC_PERIODIC   # how often borgmatic will run. valid options are '15min', 'hourly', 'daily' (default), 'weekly', or 'monthly'
 - BORGMATIC_ENCRYPTION # the repo's encryption type. defaults to 'none'
 - BORGMATIC_ROOT       # where borgmatic will store config and key files. defaults to '/config'
-- BORGMATIC_SOURCE     # the root directory that will be backed up. defaults to '/config'
-- BORGMATIC_REPO       # the directory where backups will be made. defaults to '/tmp/borgmatic-backup'
+- BORGMATIC_SOURCE     # root directory that will be backed up. defaults to '/config'
+- BORGMATIC_REPO       # directory where backups will be made. defaults to '/tmp/borgmatic-backup'
+- BORGMATIC_PASSPHRASE # passphrase used to decrypt repo. defaults to 'XYZl0ngandsecurepa_55_phrasea&&123'
 
 This mod will install the latest version of borgbackup (https://borgbackup.readthedocs.io/en/latest/installation.html) and borgmatic (https://torsion.org/borgmatic/). 
 The behviour of the mod is determined by borgmatic's configuration file, which should be mounted in the directory:

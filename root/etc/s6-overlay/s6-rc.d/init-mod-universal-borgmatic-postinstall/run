@@ -18,9 +18,6 @@ lsiown -R abc:abc /config
 
 chmod +r ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml
 
-
-
-
 echo "Validating configuration..."
 
 borgmatic config validate --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml

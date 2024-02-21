@@ -134,7 +134,7 @@ repositories:
 # Store configuration files used to create a backup in the backup
 # itself. Defaults to true. Changing this to false prevents "borgmatic
 # bootstrap" from extracting configuration files from the backup.
-store_config_files: false
+# store_config_files: false
 
 # If true, then source directories must exist, otherwise an error is
 # raised. Defaults to false.
@@ -145,7 +145,7 @@ store_config_files: false
 # passcommand/repokey/keyfile encryption. Note that if both
 # encryption_passcommand and encryption_passphrase are set, then
 # encryption_passphrase takes precedence. Defaults to not set.
-# encryption_passcommand: cat /run/secrets/borgmatic-repo-key
+encryption_passcommand: cat /run/s6/container_environment/BORGMATIC_PASSPHRASE
 
 # Passphrase to unlock the encryption key with. Only use on
 # repositories that were initialized with passphrase/repokey/keyfile

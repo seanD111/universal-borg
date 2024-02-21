@@ -6,6 +6,7 @@ echo -n "${BORGMATIC_PERIODIC:-daily}" > /run/s6/container_environment/BORGMATIC
 echo -n "${BORGMATIC_ROOT:-/config}" > /run/s6/container_environment/BORGMATIC_ROOT
 echo -n "${BORGMATIC_SOURCE:-/config}" > /run/s6/container_environment/BORGMATIC_SOURCE
 echo -n "${BORGMATIC_REPO:-/tmp/borgmatic-backup}" > /run/s6/container_environment/BORGMATIC_REPO
+echo -n "${BORGMATIC_PASSPHRASE:-XYZl0ngandsecurepa_55_phrasea&&123}" > /run/s6/container_environment/BORGMATIC_PASSPHRASE
 
 # "${BORGMATIC_RESTORE:=latest}"
 
