@@ -1,5 +1,16 @@
 #!/usr/bin/with-contenv bash
 
+# setting default environment variables
+echo -n "${BORGMATIC_ENCRYPTION:-none}" > /run/s6/container_environment/BORGMATIC_ENCRYPTION
+echo -n "${BORGMATIC_PERIODIC:-daily}" > /run/s6/container_environment/BORGMATIC_PERIODIC
+echo -n "${BORGMATIC_ROOT:-/config}" > /run/s6/container_environment/BORGMATIC_ROOT
+echo -n "${BORGMATIC_SOURCE:-/config}" > /run/s6/container_environment/BORGMATIC_SOURCE
+echo -n "${BORGMATIC_REPO:-/tmp/borgmatic-backup}" > /run/s6/container_environment/BORGMATIC_REPO
+echo -n "${BORGMATIC_PASSPHRASE:-XYZl0ngandsecurepa_55_phrasea&&123}" > /run/s6/container_environment/BORGMATIC_PASSPHRASE
+
+# "${BORGMATIC_RESTORE:=latest}"
+
+# make borgmatic config directories
 mkdir -p ${BORGMATIC_ROOT}/.config/borgmatic/ ${BORGMATIC_ROOT}/.config/borg/
 
 # copy default config files if they don't exist
@@ -8,7 +19,7 @@ if [[ ! -f ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml ]]; then
 fi
 
 # rather than deal with root crontabs and their possible conflicts with other containers (i.e, swag),
-# we use alpine's /etc/periodic run-parts scripts
+# we're using alpine's /etc/periodic cron run-parts scripts
 # periodic can be: 15min, hourly, daily, weekly, or monthly
 cp /app/borgmatic-backup /etc/periodic/${BORGMATIC_PERIODIC}
 chmod +rx /etc/periodic/${BORGMATIC_PERIODIC}/borgmatic-backup

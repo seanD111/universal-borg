@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bash
+
+# This is the init file used for adding os or pip packages to install lists.
+# It takes advantage of the built-in init-mods-package-install init script that comes with the baseimages.
+# If using this, we need to make sure we set this init as a dependency of init-mods-package-install so this one runs first
+
+if ! command -v borgmatic; then
+    echo "**** Adding borgmatic and ssh to package install lists ****"
+
+    # borgmatic *should* install borgbackup automatically
+    echo "borgmatic" >> /mod-repo-packages-to-install.list
+    ## Ubuntu
+    if [ -f /usr/bin/apt ]; then
+        echo "\
+            openssh-client" >> /mod-repo-packages-to-install.list
+    fi
+    # Alpine
+    if [ -f /sbin/apk ]; then
+        echo "\
+            openssh" >> /mod-repo-packages-to-install.list
+    fi
+else
+    echo "**** borgmatic already installed, skipping ****"
+fi
