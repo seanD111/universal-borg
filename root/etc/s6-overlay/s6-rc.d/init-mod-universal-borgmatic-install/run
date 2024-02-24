@@ -25,7 +25,7 @@ borgmatic config validate --config ${BORGMATIC_ROOT}/.config/borgmatic/config.ya
 
 backup_exit=2
 
-while [  ${global_exit} -eq 2 ]
+while [ ${backup_exit} -eq 2 ];
 do
   echo "Borg repo encryption mode set to ${BORGMATIC_ENCRYPTION}";
   borgmatic rcreate --encryption ${BORGMATIC_ENCRYPTION} --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml --make-parent-dirs
