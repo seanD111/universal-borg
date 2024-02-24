@@ -23,8 +23,14 @@ echo "Validating configuration..."
 
 borgmatic config validate --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml
 
-echo "Borg repo encryption mode set to ${BORGMATIC_ENCRYPTION}"; 
-borgmatic rcreate --encryption ${BORGMATIC_ENCRYPTION} --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml --make-parent-dirs
+backup_exit=2
+
+while [  ${global_exit} -eq 2 ]
+do
+  echo "Borg repo encryption mode set to ${BORGMATIC_ENCRYPTION}";
+  borgmatic rcreate --encryption ${BORGMATIC_ENCRYPTION} --config ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml --make-parent-dirs
+  backup_exit=$?
+done
 
 echo "Running initial backup..."
 # run initial IP update
