@@ -198,7 +198,7 @@ encryption_passcommand: cat /run/s6/container_environment/BORGMATIC_PASSPHRASE
 
 # Command to use instead of "ssh". This can be used to specify ssh
 # options. Defaults to not set.
-ssh_command: ssh -o StrictHostKeyChecking=accept-new -i /run/.ssh/key
+ssh_command: ssh -o StrictHostKeyChecking=accept-new -i ${BORGMATIC_SSH_KEY}
 
 # Base path used for various Borg directories. Defaults to $HOME,
 # ~$USER, or ~.
