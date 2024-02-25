@@ -30,5 +30,5 @@ echo -n "${BORGMATIC_ROOT:-/config}" > /run/s6/container_environment/BORGMATIC_R
 echo -n "${BORGMATIC_SOURCE:-/config}" > /run/s6/container_environment/BORGMATIC_SOURCE
 echo -n "${BORGMATIC_REPO:-/tmp/borgmatic-backup}" > /run/s6/container_environment/BORGMATIC_REPO
 echo -n "${BORGMATIC_PASSPHRASE:-XYZl0ngandsecurepa_55_phrasea&&123}" > /run/s6/container_environment/BORGMATIC_PASSPHRASE
-echo -n "${BORGMATIC_SSH_KEY:-/~/.ssh/key}" > /run/s6/container_environment/BORGMATIC_SSH_KEY
+echo -n "${BORGMATIC_SSH_KEY:-/run/.ssh/key}" > /run/s6/container_environment/BORGMATIC_SSH_KEY
 echo -n "${BORGMATIC_RESTORE:-latest}" > /run/s6/container_environment/BORGMATIC_RESTORE
