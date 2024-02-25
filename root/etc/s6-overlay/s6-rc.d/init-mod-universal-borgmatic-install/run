@@ -8,6 +8,14 @@ if [[ ! -f ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml ]]; then
     cp /defaults/config.yaml.sample ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml
 fi
 
+BORGMATIC_SSH_KEY
+
+# if an ssh private key is found for borgmatic, change its mode
+if [[ -f ${BORGMATIC_SSH_KEY} ]]; then
+#  lsiown abc:abc ${BORGMATIC_SSH_KEY}
+  chmod 600 ${BORGMATIC_SSH_KEY}    
+fi
+
 # rather than deal with root crontabs and their possible conflicts with other containers (i.e, swag),
 # we're using alpine's /etc/periodic cron run-parts scripts
 # periodic can be: 15min, hourly, daily, weekly, or monthly
