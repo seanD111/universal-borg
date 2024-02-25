@@ -9,7 +9,7 @@ if [[ ! -f ${BORGMATIC_ROOT}/.config/borgmatic/config.yaml ]]; then
 fi
 
 # if an ssh private key is found for borgmatic, change its mode
-if [[ -f ${BORGMATIC_SSH_KEY} ]]; then
+if [[ -e ${BORGMATIC_SSH_KEY} ]]; then
 #  lsiown abc:abc ${BORGMATIC_SSH_KEY}
   chmod 600 ${BORGMATIC_SSH_KEY}    
 fi
